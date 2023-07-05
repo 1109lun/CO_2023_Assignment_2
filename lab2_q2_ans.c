@@ -1,0 +1,18 @@
+// TODO : 
+
+"li t3, 8\n\t"
+"vsetvli t0, t3, e16, ta, ma\n\t"
+"vle16.v v0, (%[p_x])\n\t"
+"loop:\n\t"
+"addi t3, t3, -1\n\t"
+"lh t2, 0(%[p_x])\n\t"
+"vadd.vx v1, v0, t2\n\t"
+"vmseq.vx v2, v1, %[target]\n\t"
+"vfirst.m t1, v2\n\t"
+"bge t1, x0, Flag\n\t"
+"addi %[p_x], %[p_x], 2\n\t"
+"bnez t3, loop\n\t"
+"j last\n\t"
+"Flag:\n\t"
+"addi %[flag], %[flag], 1\n\t"
+"last:\n\t"
